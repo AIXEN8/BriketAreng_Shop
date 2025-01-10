@@ -1,0 +1,25 @@
+# File konfigurasi
+config.js
+.env
+credentials.json
+config.php
+
+# Dependencies
+/node_modules
+/vendor
+composer.lock
+
+# File build
+/build
+/dist
+
+# File sistem PHP
+.php_cs.cache
+*.log
+error_log
+/logs/*
+
+# File IDE dan sistem
+.idea/
+.vscode/
+.DS_Store 

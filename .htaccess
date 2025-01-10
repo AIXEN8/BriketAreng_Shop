@@ -1,0 +1,57 @@
+# Mencegah directory listing
+
+Options -Indexes
+
+# Mencegah akses ke file PHP di folder tertentu
+
+<FilesMatch "^(config|includes)">
+Order deny,allow
+Deny from all
+</FilesMatch>
+
+# Mencegah akses ke file konfigurasi
+
+<Files ~ "\.(env|config|ini|htaccess|htpasswd|json)$">
+Order deny,allow
+Deny from all
+</Files>
+
+# Mencegah akses langsung ke file PHP tertentu
+
+<Files ~ "(db|config|functions)\.php$">
+Order deny,allow
+Deny from all
+</Files>
+
+# Proteksi dari XSS dan injeksi
+
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Mencegah akses langsung ke file PHP kecuali index.php
+
+<FilesMatch "^(?!index\.php$).*\.php$">
+Order Deny,Allow
+Deny from all
+</FilesMatch>
+
+# Mencegah listing direktori
+
+Options -Indexes
+
+# Mencegah akses ke file .env
+
+<Files .env>
+Order allow,deny
+Deny from all
+</Files>
+
+# Redirect semua request ke index.php (jika menggunakan router)
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.\*)$ index.php [QSA,L]
